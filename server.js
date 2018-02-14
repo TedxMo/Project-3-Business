@@ -22,10 +22,6 @@ var request = require('request');
 // 	console.log(socket.id);
 // })
 
-app.get("*", function(req, res) {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
-});
-
 // Configure body parser for AJAX requests
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -53,7 +49,9 @@ mongoose.connect(
 
 
 // connect to the database and load models
-
+app.get("*", function(req, res) {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
 // Start the API server
 // server.listen(PORT, function () {
 app.listen(PORT, function () {
