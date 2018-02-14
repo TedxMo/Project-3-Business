@@ -22,6 +22,10 @@ var request = require('request');
 // 	console.log(socket.id);
 // })
 
+app.get("*", function(req, res) {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
+
 // Configure body parser for AJAX requests
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
