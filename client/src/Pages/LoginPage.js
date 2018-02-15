@@ -130,7 +130,7 @@ class LoginPage extends Component {
 
         API.login(formData)
             .then(res => {
-                console.log('this is being accessed')
+                console.log('this is being accessed by manager')
                 this.setState({
                     user: {
                         username: "",

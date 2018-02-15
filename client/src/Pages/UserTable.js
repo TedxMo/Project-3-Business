@@ -6,7 +6,7 @@ import { Col, Row, Container } from '../components/Grid'
 import { List, ListItem } from "../components/List";
 import Chat from "../components/Chat/Chat.js";
 import {Redirect} from 'react-router-dom'; 
-
+import Auth from "../modules/Auth"
 
 
 
@@ -16,6 +16,7 @@ class UserTable extends Component {
   state = {
 
     requests: [],
+    url:'',
     isredirect:false
   }
 
@@ -36,7 +37,16 @@ class UserTable extends Component {
 
   handleRedirect= event =>{
     event.preventDefault();
-    this.setState({isredirect:true});
+
+    this.setState({url:'createrequest',isredirect:true})
+
+  }
+
+  logoutFunc = event =>{
+    event.preventDefault();
+    Auth.deauthenticateUser();
+    this.setState({url:'',isredirect:true})
+    
   }
 
   updateRequest = (id,status) => {
@@ -70,7 +80,7 @@ renderSwitch(status,id){
       <div>
         <div>
           <SaveBtn onClick={this.handleRedirect} value='Create Request' />
-          {this.state.isredirect? (<Redirect to={{pathname:"/createrequest", state:this.state}}/>) : null}
+          {this.state.isredirect? (<Redirect to={{pathname:"/"+this.state.url, state:this.state}}/>) : null}
         </div>
 
         <Container fluid className='card'>
@@ -122,6 +132,8 @@ renderSwitch(status,id){
           ) : (
               <h3>No Requests opened yet</h3>
             )}
+          <br />
+          <SaveBtn onClick={this.logoutFunc} value='Log Out' />
 
 
         </Container>
