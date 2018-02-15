@@ -33,15 +33,15 @@ app.use(express.static("client/build"));
 // Add routes, both API and view
 app.use(routes);
 
-// app.use(passport.initialize());
+app.use(passport.initialize());
 
-// const authCheckMiddleware = require('./middleware/auth-check');
-// app.use('/api/createuser/auth', authCheckMiddleware);
+const authCheckMiddleware = require('./middleware/auth-check');
+app.use('/api/createuser/auth', authCheckMiddleware);
 
-// const localSignupStrategy = require('./passport/local-signup');
-// const localLoginStrategy = require('./passport/local-login');
-// passport.use('local-signup', localSignupStrategy);
-// passport.use('local-login', localLoginStrategy);
+const localSignupStrategy = require('./passport/local-signup');
+const localLoginStrategy = require('./passport/local-login');
+passport.use('local-signup', localSignupStrategy);
+passport.use('local-login', localLoginStrategy);
 
 // Set up promises with mongoose
 mongoose.Promise = global.Promise;
