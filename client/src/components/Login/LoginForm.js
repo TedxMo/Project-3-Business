@@ -7,9 +7,11 @@ import TextField from 'material-ui/TextField';
 
 const LoginForm = ({
   onSubmit,
+  onManagerSubmit,
   onChange,
   errors,
   successMessage,
+  url,
   user,
   toggleAuthenticateStatus
 }) => (
@@ -42,7 +44,10 @@ const LoginForm = ({
       </div>
 
       <div className="button-line">
-        <RaisedButton type="submit" label="Log in" primary />
+        <RaisedButton type="submit" label="User Log in" primary />
+        <br />
+        <br />
+        <RaisedButton type="submit" label="Manager Log in" onClick={onManagerSubmit} primary />
       </div>
 
       <CardText>Don't have an account? <Link to={'/createuser'}>Create one</Link>.</CardText>
@@ -55,7 +60,8 @@ LoginForm.propTypes = {
   onChange: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   successMessage: PropTypes.string.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  onManagerSubmit: PropTypes.func.isRequired
 };
 
 export default LoginForm;

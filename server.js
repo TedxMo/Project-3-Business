@@ -47,7 +47,7 @@ passport.use('local-login', localLoginStrategy);
 mongoose.Promise = global.Promise;
 // Connect to the Mongo DB
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/project3"
+  process.env.MONGODB_URI || "mongodb://localhost/assetSystem"
 );
 
 //let's try this again

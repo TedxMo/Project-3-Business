@@ -32,12 +32,12 @@ class LoginPage extends Component {
             }
         };
 
-        this.processForm = this.processForm.bind(this);
+        // this.processForm = this.processForm.bind(this);
         this.changeUser = this.changeUser.bind(this);
     }
 
 
-    processForm(event) {
+    processForm = (event) => {
         // prevent default action. in this case, action is the form submission event
         event.preventDefault();
 
@@ -45,6 +45,8 @@ class LoginPage extends Component {
         const username = encodeURIComponent(this.state.user.username);
         const password = encodeURIComponent(this.state.user.password);
 
+
+        // const formData = `username=${username}&password=${password}`;
 
         const formData = {};
         formData.username = username;
@@ -54,50 +56,130 @@ class LoginPage extends Component {
         console.log(formData);
 
 
-          API.login(formData)
-            .then(res => this.setState(this.setState({
-                username: "",
-                password: ""
-            })))
-            .catch(err => console.log("error is " + err));
+        API.login(formData)
+            .then(res => {
+                console.log('this is being accessed')
+                this.setState({
+                    user: {
+                        username: "",
+                        password: ""
+                    }
+                })
+
+                
+                this.props.history.push('/user');
+
+            }).catch(err => console.log("error is " + err));
 
         // create an AJAX request
-        // const xhr = new XMLHttpRequest();
-        // xhr.open('post', '/');
-        // xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        // xhr.responseType = 'json';
-        // xhr.addEventListener('load', () => {
-        //     if (xhr.status === 200) {
-        //         // success
+    //     const xhr = new XMLHttpRequest();
+    //     xhr.open('post', '/auth/login');
+    //     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    //     xhr.responseType = 'json';
+    //     xhr.addEventListener('load', () => {
+    //         if (xhr.status === 200) {
+    //             // success
 
-        //         // change the component-container state
-        //         this.setState({
-        //             errors: {}
-        //         });
+    //             // change the component-container state
+    //             this.setState({
+    //                 errors: {}
+    //             });
 
-        //         // save the token
-        //         Auth.authenticateUser(xhr.response.token);
+    //             // save the token
+    //             Auth.authenticateUser(xhr.response.token);
 
-        //         // update authenticated state
-        //         this.props.toggleAuthenticateStatus()
+    //             // update authenticated state
+    //             this.props.toggleAuthenticateStatus()
 
-        //         // redirect signed in user to login page
-        //         this.props.history.push('/user');
-        //     } else {
-        //         // failure
+    //             // redirect signed in user to login page
+    //             this.props.history.push('/user');
+    //         } else {
+    //             // failure
 
-        //         // change the component state
-        //         const errors = xhr.response.errors ? xhr.response.errors : {};
-        //         errors.summary = xhr.response.message;
+    //             // change the component state
+    //             const errors = xhr.response.errors ? xhr.response.errors : {};
+    //             errors.summary = xhr.response.message;
 
-        //         this.setState({
-        //             errors
-        //         });
-        //     }
-        // });
-        // xhr.send(formData);
-    }
+    //             this.setState({
+    //                 errors
+    //             });
+    //         }
+    //     });
+    //     xhr.send(formData);
+    //
+ }
 
+    managerForm = (event) => {
+        // prevent default action. in this case, action is the form submission event
+        event.preventDefault();
+
+        // create a string for an HTTP body message
+        const username = encodeURIComponent(this.state.user.username);
+        const password = encodeURIComponent(this.state.user.password);
+
+
+        // const formData = `username=${username}&password=${password}`;
+
+        const formData = {};
+        formData.username = username;
+        formData.password = password;
+
+        console.log("MyData")
+        console.log(formData);
+
+
+        API.login(formData)
+            .then(res => {
+                console.log('this is being accessed')
+                this.setState({
+                    user: {
+                        username: "",
+                        password: ""
+                    }
+                })
+
+                
+                this.props.history.push('/manager');
+
+            }).catch(err => console.log("error is " + err));
+
+        // create an AJAX request
+    //     const xhr = new XMLHttpRequest();
+    //     xhr.open('post', '/auth/login');
+    //     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    //     xhr.responseType = 'json';
+    //     xhr.addEventListener('load', () => {
+    //         if (xhr.status === 200) {
+    //             // success
+
+    //             // change the component-container state
+    //             this.setState({
+    //                 errors: {}
+    //             });
+
+    //             // save the token
+    //             Auth.authenticateUser(xhr.response.token);
+
+    //             // update authenticated state
+    //             this.props.toggleAuthenticateStatus()
+
+    //             // redirect signed in user to login page
+    //             this.props.history.push('/user');
+    //         } else {
+    //             // failure
+
+    //             // change the component state
+    //             const errors = xhr.response.errors ? xhr.response.errors : {};
+    //             errors.summary = xhr.response.message;
+
+    //             this.setState({
+    //                 errors
+    //             });
+    //         }
+    //     });
+    //     xhr.send(formData);
+    //
+ }
 
     changeUser(event) {
         const field = event.target.name;
@@ -135,7 +217,9 @@ class LoginPage extends Component {
                         errors={this.state.errors}
                         successMessage={this.state.successMessage}
                         user={this.state.user}
-                    /> </MuiThemeProvider>
+                        onManagerSubmit={this.managerForm}
+                    /> 
+                </MuiThemeProvider>
             </div>
         )
     }
